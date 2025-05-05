@@ -1,19 +1,8 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import bassirou from "../assets/bassirou.jpg"
-import { Mail, LucideGithub, Linkedin, Divide, LetterText, CalendarSync, Paintbrush, Container } from 'lucide-react';
+import { Mail, LucideGithub, Linkedin, LetterText, CalendarSync, Paintbrush, Container } from 'lucide-react';
 import {Link} from "react-router-dom"
 import Titre from './Titre';
-interface Projet {
-  id: number;
-  titre: string;
-  slug: string;
-  description: string;
-  demolien: string;
-  repolien: string;
-  technologies: string;
-  image: string;
-}
 
 
 const aboutSections = [

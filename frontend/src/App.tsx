@@ -5,23 +5,29 @@ import Navbar from './components/Navbar'
 import { Routes, Route } from 'react-router-dom'
 import Service from './components/Service'
 import Blog from './components/Blog'
+import Footer from './components/Footer'
 
 function App() {
   return (
     <>
-    <div>
+    <div >
       <Navbar />
-      <Home/>
     </div>
-    
-   
-     
+ 
+  
       <Routes>
-        <Route path="/" element={<Home />} />
+      
+        <Route path="/home" element={<Home />} />
+        
         <Route path="/projets" element={<Projet />} />
         <Route path='/service' element={<Service/>} />
         <Route path='/blog' element={<Blog/>}/>
       </Routes>
+    
+    <div>
+    <Footer/>
+    </div>
+     
     </>
   )
 }
