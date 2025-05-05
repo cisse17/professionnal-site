@@ -18,7 +18,8 @@ class Blog(models.Model):
     video = models.FileField(upload_to='blog_videos/', null=True, blank=True)
     categorie = models.CharField(max_length=50, choices=CATEGORIES)
     auteur = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -35,7 +36,10 @@ class Projet(models.Model):
     description = models.TextField()
     demolien = models.URLField(max_length=500)
     repolien = models.URLField(max_length=500)
-    technologies = models.CharField(max_length=300)
+    technologies = models.JSONField(default=list) 
+    # technologies = models.CharField(max_length=300)
+    # j'utilise SQLite (souvent le cas en dev local) mais je le modifierai en postgresql
+    # technologies = ArrayField(models.CharField(max_length=100), blank=True, default=list)
     image = models.ImageField(upload_to='projets_images/')
 
     def save(self, *args, **kwargs):

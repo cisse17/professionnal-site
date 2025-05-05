@@ -7,9 +7,9 @@ from .models import Blog, Projet
 
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('titre', 'created_at')
+    list_display = ('titre', 'date')
     search_fields = ('titre', 'content')
-    list_filter = ('created_at',)
+    list_filter = ('date',)
 
 
 @admin.register(Projet)
