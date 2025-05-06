@@ -5,7 +5,7 @@ interface TitreProps{
 const Titre = ({titre} : TitreProps ) => {
   return (
     <div>
-        <h1>
+        <h1 className="text-2xl font-bold font-serif">
             {titre}
             
         </h1>
