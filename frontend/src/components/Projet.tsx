@@ -21,7 +21,8 @@ const Projet = () => {
 
   console.log(Projets);
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/projet/").then((res) => {
+    axios.get("http://127.0.0.1:8000/api/projet/")
+    .then((res) => {
       setProjects(res.data);
     });
   }, []);
@@ -63,7 +64,7 @@ const Projet = () => {
       <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-10 text-blue-900">
         Mes <span className="text-blue-600">Projets</span>
       </h1>
-
+        
       {/* Filtres */}
       <div className="flex flex-col md:flex-row gap-4 mb-10 justify-center" data-aos="fade-down">
         <input

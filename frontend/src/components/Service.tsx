@@ -1,9 +1,10 @@
 
+
 const Service = () => {
   return (
-    <div>
+    <div className="mt-0">
         page service
-        qdsfbkjgn;df;k<br></br>
+        qdsfbkjgn;df;k
       
     </div>
   )
