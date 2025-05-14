@@ -14,6 +14,7 @@ interface Article {
   categorie: string;
   video: string | null;
   image: string;
+  likes: number;
 }
 
 const Blog = () => {
@@ -34,6 +35,15 @@ const Blog = () => {
       .get("http://127.0.0.1:8000/api/blog/", { params })
       .then((res) => {
         setArticles(res.data);
+
+        setLikes(() => {
+          const initialLikes: { [key: number]: number } = {};
+          res.data.forEach((article: Article) => {
+            initialLikes[article.id] = article.likes;
+          });
+          return initialLikes;
+        });
+        
         setError(null);
       })
       .catch(() => {
@@ -46,6 +56,19 @@ const Blog = () => {
     fetchArticles();
   }, [fetchArticles]);
 
+
+  const handleLike = async (id: number) => {
+    try {
+      await axios.post(`http://127.0.0.1:8000/api/blog/${id}/like/`);
+      setLikes((prev) => ({
+        ...prev,
+        [id]: (prev[id] || 0) + 1,
+      }));
+    } catch (err) {
+      console.error("Erreur lors du like :", err);
+    }
+  };
+  
   return (
     <section className="bg-gray-50 py-16 px-6 min-h-screen">
       <div className="max-w-6xl mx-auto px-6">
@@ -153,18 +176,15 @@ const Blog = () => {
           </Link>
 
           <div className="flex items-center gap-2 mt-2">
-  <button
-    onClick={() =>
-      setLikes((prev) => ({
-        ...prev,
-        [article.id]: (prev[article.id] || 0) + 1,
-      }))
-    }
-    className="text-red-500 hover:scale-110 transition transform text-lg"
-    aria-label="J'aime"
-  >
-    ❤️
-  </button>
+          <button
+  onClick={() => handleLike(article.id)}
+  className="text-red-500 hover:scale-110 transition transform text-lg"
+  aria-label="J'aime"
+>
+  ❤️
+</button>
+
+
   <span className="text-sm text-gray-500">
     {likes[article.id] || 0} j’aime
   </span>
