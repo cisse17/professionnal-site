@@ -1,12 +1,18 @@
 from django.shortcuts import render
-from django.http.response import HttpResponse
 
+
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import viewsets, permissions, status
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.decorators import api_view
+
 from .serializers import BlogSerializers, ProjetSerializers
 from .models import Projet, Blog
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.utils.text import slugify
+
+
 # Create your views here.
 
 class ProjetViewSet(viewsets.ViewSet):
@@ -80,12 +86,23 @@ class ProjetViewSet(viewsets.ViewSet):
             return Response({'error': 'Projet non trouvé'}, status=status.HTTP_404_NOT_FOUND)
 
 
+
+
+class BlogPagination(PageNumberPagination):
+    page_size = 6  # Nombre d'articles par page
+    page_size_query_param = 'page_size'  # Paramètre de requête pour le nombre d'articles par page
+    max_page_size = 100  # Nombre maximal d'articles par page
+
+
 class BlogViewSet(viewsets.ViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = BlogSerializers
+    parser_classes = [MultiPartParser, FormParser]
+    pagination_class = BlogPagination 
+   
 
     def list(self, request):
-        queryset = Blog.objects.all()
+        queryset = Blog.objects.all().order_by('-date')
 
         # Filtrage possible avec ?categorie= auteur "bassirou" ou exple  "dev"
         categorie = request.GET.get('categorie')
@@ -108,23 +125,35 @@ class BlogViewSet(viewsets.ViewSet):
             return Response({'error': 'Blog non trouvé'}, status=status.HTTP_404_NOT_FOUND)
 
     def create(self, request):
-        data = request.data.copy()
-
-        if "slug" not in data or not data["slug"]:
-            data["slug"] = slugify(data.get("titre", ""))
-
-        base_slug = data["slug"]
-        slug = base_slug
+        # N'utilise PAS .copy() pour éviter l'erreur de BufferedRandom
+        titre = request.data.get("titre", "")
+        slug_base = slugify(titre)
+        slug = slug_base
         i = 1
         while Blog.objects.filter(slug=slug).exists():
-            slug = f"{base_slug}-{i}"
+            slug = f"{slug_base}-{i}"
             i += 1
-        data["slug"] = slug
 
-        serializer = BlogSerializers(data=data)
+        # Crée un dictionnaire de données, en gardant les fichiers séparés
+        data = {
+            "titre": titre,
+            "content": request.data.get("content", ""),
+            "auteur": request.data.get("auteur", ""),
+            "categorie": request.data.get("categorie", ""),
+            "slug": slug,
+        }
+
+        files = {}
+        if "image" in request.FILES:
+            files["image"] = request.FILES["image"]
+        if "video" in request.FILES:
+            files["video"] = request.FILES["video"]
+
+        serializer = BlogSerializers(data={**data, **files})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, pk=None):
@@ -160,6 +189,17 @@ class BlogViewSet(viewsets.ViewSet):
             return Response({'error': 'Blog non trouvé'}, status=status.HTTP_404_NOT_FOUND)
   
 
+
+
+@api_view(['POST'])
+def like_blog(request, pk):
+    try:
+        blog = Blog.objects.get(pk=pk)
+        blog.likes += 1
+        blog.save()
+        return Response({'likes': blog.likes})
+    except Blog.DoesNotExist:
+        return Response({'error': 'Blog non trouvé'}, status=status.HTTP_404_NOT_FOUND)
 
         
 

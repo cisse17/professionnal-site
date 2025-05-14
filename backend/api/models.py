@@ -5,9 +5,13 @@ from django.db import models
 from django.utils.text import slugify
 
 CATEGORIES = [
-    ('tech', 'Technologie'),
-    ('dev', 'Développement'),
+    ('Tech', 'Technologie'),
+    ('Dev', 'Développement'),
     ('life', 'Vie personnelle'),
+    ('Actu', 'Actualité'),
+    ('Design', 'Design'),
+    ('Formation', 'Formation'),
+
 ]
 
 class Blog(models.Model):
@@ -20,6 +24,7 @@ class Blog(models.Model):
     auteur = models.CharField(max_length=100)
     # created_at = models.DateTimeField(auto_now_add=True)
     date = models.DateTimeField(blank=True, null=True)
+    likes = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.slug:
