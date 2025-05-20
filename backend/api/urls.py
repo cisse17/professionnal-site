@@ -13,6 +13,7 @@ router.register("blog", BlogViewSet, basename="blog")
 urlpatterns = [
     path("", include(router.urls)),  
     path("blog/<int:pk>/like/", views.like_blog, name="like-blog"), 
+    # path("blog/<int:pk>/dislike/", views.dislike_blog, name="dislike_blog"),
 ]
 
 

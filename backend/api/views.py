@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -190,16 +190,37 @@ class BlogViewSet(viewsets.ViewSet):
   
 
 
-
-@api_view(['POST'])
+@api_view(["POST"])
 def like_blog(request, pk):
-    try:
-        blog = Blog.objects.get(pk=pk)
+    blog = get_object_or_404(Blog, pk=pk)
+    cookie_key = f"liked_{pk}"
+
+    if request.COOKIES.get(cookie_key):
+        liked = True
+    else:
         blog.likes += 1
         blog.save()
-        return Response({'likes': blog.likes})
-    except Blog.DoesNotExist:
-        return Response({'error': 'Blog non trouvé'}, status=status.HTTP_404_NOT_FOUND)
+        liked = True
 
-        
+    response = Response({"likes": blog.likes, "liked": liked}, status=status.HTTP_200_OK)
+    if not request.COOKIES.get(cookie_key):
+        response.set_cookie(cookie_key, "true", max_age=60 * 60 * 24 * 365)  # 1 an
+    return response
+
+
+# @api_view(["POST"])
+# def dislike_blog(request, pk):
+#     blog = get_object_or_404(Blog, pk=pk)
+#     cookie_key = f"liked_{pk}"
+
+#     if request.COOKIES.get(cookie_key):
+#         if blog.likes > 0:
+#             blog.likes -= 1
+#             blog.save()
+
+#         response = Response({"likes": blog.likes, "liked": False}, status=status.HTTP_200_OK)
+#         response.delete_cookie(cookie_key)
+#         return response
+#     else:
+#         return Response({"detail": "Like non trouvé"}, status=status.HTTP_400_BAD_REQUEST)
 
