@@ -12,6 +12,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.utils.text import slugify
 
+# import pour mo, chatbot
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.conf import settings
+import json
+import openai
+
 
 # Create your views here.
 
@@ -208,19 +215,101 @@ def like_blog(request, pk):
     return response
 
 
-# @api_view(["POST"])
-# def dislike_blog(request, pk):
-#     blog = get_object_or_404(Blog, pk=pk)
-#     cookie_key = f"liked_{pk}"
+# On va rendre le prompt dynamique en allant chercher mes projets (et autres infos) directement dans la base Django, puis les injecter dans le message system avant chaque appel OpenAI.
+# Ainsi, quand j'ajoute ou modifie un projet dans l’admin, le bot connaît immédiatement la mise à jour.
 
-#     if request.COOKIES.get(cookie_key):
-#         if blog.likes > 0:
-#             blog.likes -= 1
-#             blog.save()
+from .utils import build_portfolio_context
+#from .utils import build_projects_snippet  
 
-#         response = Response({"likes": blog.likes, "liked": False}, status=status.HTTP_200_OK)
-#         response.delete_cookie(cookie_key)
-#         return response
-#     else:
-#         return Response({"detail": "Like non trouvé"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+# Initialise correctement le client
+client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
+# views pour assistant chatbot portfolio
+@csrf_exempt
+def chat_view(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Méthode non autorisée'}, status=405)
+
+    try:
+        data = json.loads(request.body)
+        user_messages = data.get('messages', [])
+
+        # ------- Contenu dynamique --------
+        # projects_md = build_projects_snippet()
+
+        system_message = {
+            "role": "system",
+            "content": """
+Tu es l'assistant personnel de Bassirou Mbacké CISSE, un développeur web fullstack/llm spécialisé en React, Python/Django,RAG, LangChain, TailwindCSS, maitrise les notions de bases en DevOps, Node.js, API en Node.js, TypeScript et un peu UI/UX. Tu réponds de manière amicale, claire et professionnelle à toute question sur ses projets, compétences ou son portfolio, en français.
+
+Voici ses projets :
+
+1. **Portfolio personnel** : site vitrine présentant ses compétences, projets, blog et contact.
+2. **Apllication web PhotoShare** : plateforme de publication de photo de souvenir avec interface admin complète.
+3. **Site Ecommerce** : site ecommerce pour la vente d'habits.
+4. **Chat PDF** : Recherche augmentée par intelligence artificielle
+(RAG) avec OpenAI API intégré.
+
+Voici des informations actuelles sur son portfolio :
+{build_portfolio_context}
+
+
+Si l'utilisateur demande un lien demo ou repo, réponds‑lui avec celui disponible.
+
+
+Voici ces Valeurs personnelles : 
+
+1. tolérance et équité
+2. autonomie
+3. Curieux 
+
+Voici ces valeurs professionnelles :
+
+1. Ambiance et coopération au travail   
+2. Engagement pour le bien commun
+3. Grande curiosité intellectuelle
+4. Capacité à rechercher des solutions
+5. Collaboration et esprit d\n’équipe
+6. Adaptabilité et flexibilité
+7. Aptitude à communiquer et partager les connaissances
+
+
+Compétences Comportementales :
+Leadership :  => Résultat => on a fini le projet dans les délais.
+.
+Projet MORGEN, Lors de ce projet, j’ai pris une décision d’organiser et coordonner les réunions et dédier les tâches  pour chaque membre du groupe pour l’avancement du projet.
+
+Esprit d'Équipe : Ma capacité à travailler efficacement en équipe et à collaborer avec différents types de personnalités.
+Résultat => satisfaction des membres du groupe, contribuant ainsi à préserver le groupe à travers le temps.
+
+Gestion du temps : Ma capacité à gérer efficacement le temps et à prioriser les tâches.
+Réalisation de tableau de bord pour le suivi du projet avec Trello et bien définir les tâches à réaliser, les objectifs et les dates de rendu pour chaque tâche et le deadline du projet.
+Résultat => On a fini le projet et livrer dans les délais
+
+N°Télephone : +33758252282
+
+N'hésite pas à orienter les réponses vers ses réalisations réelles.
+"""
+        }
+
+        messages = [system_message] + user_messages
+
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            temperature=0.7
+        )
+
+        assistant_reply = response.choices[0].message
+
+        return JsonResponse({
+            'reply': {
+                "role": assistant_reply.role,
+                "content": assistant_reply.content
+            }
+        })
+
+    except Exception as e:
+        print("Erreur OpenAI :", e)
+        return JsonResponse({'error': str(e)}, status=500)

@@ -1,7 +1,7 @@
 from django.urls import path, include
 from . import views
 from rest_framework.routers import DefaultRouter
-from .views import ProjetViewSet, BlogViewSet
+from .views import ProjetViewSet, BlogViewSet, chat_view
 
 router = DefaultRouter()
 
@@ -13,7 +13,9 @@ router.register("blog", BlogViewSet, basename="blog")
 urlpatterns = [
     path("", include(router.urls)),  
     path("blog/<int:pk>/like/", views.like_blog, name="like-blog"), 
-    # path("blog/<int:pk>/dislike/", views.dislike_blog, name="dislike_blog"),
+    path("chat/", chat_view, name="chat"),
+ 
 ]
+
 
 

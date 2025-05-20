@@ -84,6 +84,10 @@ DATABASES = {
 }
 
 
+# INSTALLED_APPS += ["corsheaders"]
+# MIDDLEWARE.insert(0, "corsheaders.middleware.CorsMiddleware")
+# CORS_ALLOW_ALL_ORIGINS = True  # ou CORS_ALLOWED_ORIGINS avec ta config
+
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
 ]
@@ -95,6 +99,11 @@ REST_FRAMEWORK = {
 }
 
 
+import os
+from dotenv import load_dotenv
+load_dotenv()  # charge mon .env
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
