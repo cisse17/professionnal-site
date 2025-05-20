@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Github } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface MyProjet {
   id: number;
@@ -60,8 +61,9 @@ const Projet = () => {
     <div className="pt-20 md:pt-24 pb-16 px-4 min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100">
     <div className="max-w-6xl mx-auto px-6">
 
+
       {/* Titre principal */}
-      <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-10 text-blue-900">
+      <h1 className="text-4xl  font-bold text-center mb-10 text-blue-900">
         Mes <span className="text-blue-600">Projets</span>
       </h1>
         
@@ -90,7 +92,7 @@ const Projet = () => {
       </div>
 
       {/* Grid de projets */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" data-aos="fade-up">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8" data-aos="fade-up">
         {filteredProjets.map((projet) => (
           <div
             key={projet.id}
@@ -145,6 +147,59 @@ const Projet = () => {
         ))}
 
       </div>
+
+
+
+<section className="bg-gray-50 py-20 px-6">
+  <div className="max-w-4xl mx-auto">
+    
+    {/* Section Projets & Apprentissage */}
+    <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12 text-indigo-700">
+            En cours & apprentissages
+          </h2>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="bg-white p-6 rounded-xl shadow"
+          >
+            <h3 className="text-xl font-semibold text-indigo-600 mb-4">Technologies en cours d’apprentissage</h3>
+            <ul className="space-y-3 text-gray-800">
+              <motion.li whileHover={{ scale: 1.02 }} className="flex items-center">
+                <input type="checkbox" checked readOnly className="mr-2" />
+                TypeScript
+              </motion.li>
+              <motion.li whileHover={{ scale: 1.02 }} className="flex items-center">
+                <input type="checkbox" checked={false} readOnly className="mr-2" />
+                Next.js
+              </motion.li>
+              <motion.li whileHover={{ scale: 1.02 }} className="flex items-center">
+                <input type="checkbox" checked={false} readOnly className="mr-2" />
+                Langchain & LLM
+              </motion.li>
+              <motion.li whileHover={{ scale: 1.02 }} className="flex items-center">
+                <input type="checkbox" checked={false} readOnly className="mr-2" />
+                Node.js
+              </motion.li>
+              <motion.li whileHover={{ scale: 1.02 }} className="flex items-center">
+                <input type="checkbox" checked={false} readOnly className="mr-2" />
+                Java
+              </motion.li>
+            </ul>
+          </motion.div>
+          </div>
+  </div>
+</section>
+
+
+
+
+
+
+
     </div>
   </div>
 

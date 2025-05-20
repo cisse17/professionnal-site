@@ -76,7 +76,7 @@ function Home() {
 
     <div className="bg-white rounded-xl shadow-md p-6 text-gray-600">
       <p>
-        Passionné par la technologie, je conçois et déploie des solutions robustes,
+        Etudiant, passionné par la technologie, je conçois et déploie des solutions robustes,
         intelligentes et scalables. Mon expertise couvre le développement web,
         les pipelines DevOps et l'intégration de modèles LLM.
       </p>
