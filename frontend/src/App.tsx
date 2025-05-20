@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import BlogDetail from './components/blog/BlogDetail'
+import Chatbot from './components/chatbot/chatbot'
 
 
 
@@ -29,7 +30,7 @@ function App() {
       <Navbar />
     </div>
  
-  
+  <Chatbot/>
       <Routes>
       
         <Route path="/home" element={<Home />} />
