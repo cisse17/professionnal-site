@@ -238,22 +238,13 @@ def chat_view(request):
         # ------- Contenu dynamique --------
         # projects_md = build_projects_snippet()
 
+        info_portfolio = build_portfolio_context()
+       
+
         system_message = {
             "role": "system",
             "content": """
-Tu es l'assistant personnel de Bassirou Mbacké CISSE, un développeur web fullstack/llm spécialisé en React, Python/Django,RAG, LangChain, TailwindCSS, maitrise les notions de bases en DevOps, Node.js, API en Node.js, TypeScript et un peu UI/UX. Tu réponds de manière amicale, claire et professionnelle à toute question sur ses projets, compétences ou son portfolio, en français.
-
-Voici ses projets :
-
-1. **Portfolio personnel** : site vitrine présentant ses compétences, projets, blog et contact.
-2. **Apllication web PhotoShare** : plateforme de publication de photo de souvenir avec interface admin complète.
-3. **Site Ecommerce** : site ecommerce pour la vente d'habits.
-4. **Chat PDF** : Recherche augmentée par intelligence artificielle
-(RAG) avec OpenAI API intégré.
-
-Voici des informations actuelles sur son portfolio :
-{build_portfolio_context}
-
+Tu es l'assistant personnel de Bassirou Mbacké CISSE, un développeur web fullstack/llm spécialisé en React, Python/Django,RAG, LangChain, TailwindCSS, maitrise les notions de bases en DevOps, Node.js, API en Node.js, TypeScript et un peu UI/UX. Tu réponds de manière amicale, claire et professionnelle à toute question sur ses projets, compétences ou son portfolio, en français.  
 
 Si l'utilisateur demande un lien demo ou repo, réponds‑lui avec celui disponible.
 
@@ -272,20 +263,15 @@ Voici ces valeurs professionnelles :
 4. Capacité à rechercher des solutions
 5. Collaboration et esprit d\n’équipe
 6. Adaptabilité et flexibilité
-7. Aptitude à communiquer et partager les connaissances
+7. Aptitude à communiquer et partager de connaissances
 
 
 Compétences Comportementales :
 Leadership :  => Résultat => on a fini le projet dans les délais.
-.
-Projet MORGEN, Lors de ce projet, j’ai pris une décision d’organiser et coordonner les réunions et dédier les tâches  pour chaque membre du groupe pour l’avancement du projet.
 
 Esprit d'Équipe : Ma capacité à travailler efficacement en équipe et à collaborer avec différents types de personnalités.
-Résultat => satisfaction des membres du groupe, contribuant ainsi à préserver le groupe à travers le temps.
 
 Gestion du temps : Ma capacité à gérer efficacement le temps et à prioriser les tâches.
-Réalisation de tableau de bord pour le suivi du projet avec Trello et bien définir les tâches à réaliser, les objectifs et les dates de rendu pour chaque tâche et le deadline du projet.
-Résultat => On a fini le projet et livrer dans les délais
 
 N°Télephone : +33758252282
 
@@ -293,7 +279,13 @@ N'hésite pas à orienter les réponses vers ses réalisations réelles.
 """
         }
 
-        messages = [system_message] + user_messages
+        # Ajouter info_portfolio comme message assistant pour ne pas alourdir la variable system message
+        portfolio_message = {
+            "role": "assistant",
+            "content": info_portfolio
+        }
+
+        messages = [system_message, portfolio_message] + user_messages
 
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
@@ -313,3 +305,14 @@ N'hésite pas à orienter les réponses vers ses réalisations réelles.
     except Exception as e:
         print("Erreur OpenAI :", e)
         return JsonResponse({'error': str(e)}, status=500)
+
+
+
+"""Voici ses projets :
+
+1. **Portfolio personnel** : site vitrine présentant ses compétences, projets, blog et contact.
+2. **Apllication web PhotoShare** : plateforme de publication de photo de souvenir avec interface admin complète.
+3. **Site Ecommerce** : site ecommerce pour la vente d'habits.
+4. **Chat PDF** : Recherche augmentée par intelligence artificielle
+(RAG) avec OpenAI API intégré.Vous pouvez discuter avec votre propre document PDF.
+"""

@@ -21,9 +21,9 @@ def build_portfolio_context():
     )
 
     # Articles
-    articles = Blog.objects.all().order_by("-date_pub")[:3]
+    articles = Blog.objects.all().order_by("-date")[:3]
     articles_str = "\n".join(
-        f"- [{a.titre}] publié le {a.date}" for a in articles
+        f"- [{a.titre}] publié le {a.date.strftime('%d/%m/%Y')}" for a in articles
     )
 
     return f"""
