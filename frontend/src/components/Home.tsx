@@ -92,8 +92,15 @@ function Home() {
       to="mailto:bassiroucisse1711@gmail.com"
       className="inline-block mt-6 px-6 py-3 bg-[#1727D7] text-white rounded-xl shadow hover:bg-blue-800 transition duration-300"
     >
-      Me contacter
+      {/* Me contacter */}
+      Email
     </Link>
+    <span  
+      className="inline-block mt-6 ml-4 px-6 py-3 bg-[#1727D7] text-white rounded-xl shadow hover:bg-blue-800 transition duration-300"
+    >
+      {/* Me contacter */}
+      Tél : 0758252282
+    </span>
   </section>
 
   {/* Photo de profil */}
