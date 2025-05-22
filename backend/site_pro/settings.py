@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+load_dotenv()  # charge mon .env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,10 +86,28 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'portfolio_db',
+#         'USER': 'portfolio_user',
+#         'PASSWORD': 'motdepassefort',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
-# INSTALLED_APPS += ["corsheaders"]
-# MIDDLEWARE.insert(0, "corsheaders.middleware.CorsMiddleware")
-# CORS_ALLOW_ALL_ORIGINS = True  # ou CORS_ALLOWED_ORIGINS avec ta config
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'portfolio_db'),
+        'USER': os.getenv('DB_USER', 'portfolio_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'motdepassefort'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
+    }
+}
+
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
@@ -99,9 +120,6 @@ REST_FRAMEWORK = {
 }
 
 
-import os
-from dotenv import load_dotenv
-load_dotenv()  # charge mon .env
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
@@ -127,7 +145,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'UTC'
 
