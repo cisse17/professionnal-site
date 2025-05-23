@@ -1,4 +1,4 @@
-// ✅ CORRECT
+
 module.exports = {
   plugins: {
     tailwindcss: {},
