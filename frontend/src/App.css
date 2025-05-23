@@ -1,10 +1,11 @@
-@import "tailwindcss";
+/* @import "tailwindcss";
 /* @plugin "daisyui"; */
 /* @theme {
   --color-regal-blue: #243c5a; 
-} */
+} 
 
 @plugin "daisyui" {
   themes: all;
   
 }  
+ */
