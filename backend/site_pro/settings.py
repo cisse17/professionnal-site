@@ -79,23 +79,13 @@ WSGI_APPLICATION = 'site_pro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'portfolio_db',
-#         'USER': 'portfolio_user',
-#         'PASSWORD': 'motdepassefort',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
 
 
 DATABASES = {
@@ -112,7 +102,7 @@ DATABASES = {
 
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
+    'http://localhost:3000',
 ]
 
 # pour gerer la pagination 
