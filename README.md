@@ -28,14 +28,14 @@ Avant de commencer, assure-toi d’avoir installé :
 
 ## 🚀 Lancer le projet en local
 
-docker compose up --build
+- **docker compose up --build** 
 Cette commande construit et démarre les services suivants :
 
 Backend (Django à http://localhost:8000)
 
 Frontend (Vite/React à http://localhost:3000)
 
-docker compose down
+- **docker compose down** 
 Cette commande arréte les services.
 
 
