@@ -11,8 +11,11 @@ interface Article {
   date: string;
   categorie: string;
   video: string | null;
-  image: string;
+  image?: string;
 }
+
+
+// const baseCloudinaryUrl = "https://res.cloudinary.com/dfrd6awzc/";
 
 const BlogDetail = () => {
   const { slug } = useParams();
@@ -21,10 +24,12 @@ const BlogDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/api/blog/${slug}`)
+      // .get(`http://127.0.0.1:8000/api/blog/${slug}`)
+      .get(`http://localhost:8000/api/blog/slug/${slug}/`)
       .then((res) => setArticle(res.data))
       .catch((err) => {
         console.error("Erreur lors du chargement de l'article :", err);
+        console.log("Détail de l'erreur :", err.response?.data); // test
         setError("Article introuvable ou une erreur est survenue.");
       });
   }, [slug]);
@@ -66,7 +71,8 @@ const BlogDetail = () => {
 
         {article.image && (
           <img
-            src={`http://127.0.0.1:8000${article.image}`}
+            // src={`http://127.0.0.1:8000${article.image}`} pour cloudinary
+            src={article.image}
             alt={article.titre}
             className="w-full rounded-xl mb-8 object-cover h-80"
           />
@@ -76,7 +82,8 @@ const BlogDetail = () => {
           <video
             controls
             className="w-full h-150 object-cover mb-8 rounded-lg shadow-md"
-            src={`http://127.0.0.1:8000${article.video}`}
+            // src={`http://127.0.0.1:8000${article.video}`}
+            src={article.video}
           >
             Votre navigateur ne prend pas en charge la lecture de vidéos.
           </video>

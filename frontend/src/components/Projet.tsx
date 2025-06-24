@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Github } from "lucide-react";
 import { motion } from "framer-motion";
-
+import TitrePage from "./TitrePage"
 interface MyProjet {
   id: number;
   titre: string;
@@ -56,12 +56,17 @@ const Projet = () => {
   //   GetData()
   // }, [])
 
+
+  const baseCloudinaryUrl = "https://res.cloudinary.com/dfrd6awzc/";
+
+
   return (
 
     <div className="pt-20 md:pt-24 pb-16 px-4 min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100">
     <div className="max-w-6xl mx-auto px-6">
 
 
+    <TitrePage titre="Mes servicesssS " size="xl"/>
       {/* Titre principal */}
       <h1 className="text-4xl  font-bold text-center mb-10 text-blue-900">
         Mes <span className="text-blue-600">Projets</span>
@@ -99,7 +104,9 @@ const Projet = () => {
             className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300"
           >
             <img
-              src={`http://127.0.0.1:8000${projet.image}`}
+              // src={`http://127.0.0.1:8000${projet.image}`}
+              // src={projet.image}
+              src={`${baseCloudinaryUrl}${projet.image}`}
               alt={projet.titre}
               className="w-full h-52 object-cover"
             />
@@ -169,7 +176,7 @@ const Projet = () => {
             <h3 className="text-xl font-semibold text-indigo-600 mb-4">Technologies en cours d’apprentissage</h3>
             <ul className="space-y-3 text-gray-800">
               <motion.li whileHover={{ scale: 1.02 }} className="flex items-center">
-                <input type="checkbox" checked readOnly className="mr-2" />
+                <input type="checkbox" checked={true} readOnly className="mr-2" />
                 TypeScript
               </motion.li>
               <motion.li whileHover={{ scale: 1.02 }} className="flex items-center">
@@ -177,17 +184,22 @@ const Projet = () => {
                 Next.js
               </motion.li>
               <motion.li whileHover={{ scale: 1.02 }} className="flex items-center">
-                <input type="checkbox" checked={false} readOnly className="mr-2" />
+                <input type="checkbox" checked={true} readOnly className="mr-2" />
                 Langchain & LLM
               </motion.li>
               <motion.li whileHover={{ scale: 1.02 }} className="flex items-center">
-                <input type="checkbox" checked={false} readOnly className="mr-2" />
+                <input type="checkbox" checked={true} readOnly className="mr-2" />
                 Node.js
               </motion.li>
               <motion.li whileHover={{ scale: 1.02 }} className="flex items-center">
-                <input type="checkbox" checked={false} readOnly className="mr-2" />
-                Java
+                <input type="checkbox" checked={true} readOnly className="mr-2" />
+                Amazon web service (Aws)
               </motion.li>
+              <motion.li whileHover={{ scale: 1.02 }} className="flex items-center">
+                <input type="checkbox" checked={false} readOnly className="mr-2" />
+                Kubernetes
+              </motion.li>
+             
             </ul>
           </motion.div>
           </div>

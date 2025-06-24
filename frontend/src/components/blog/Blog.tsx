@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import TitrePage from "../TitrePage";
 
 interface Article {
   id: number;
@@ -109,14 +110,8 @@ const Blog = () => {
   return (
     <section className="bg-gradient-to-br from-white via-blue-50 to-blue-100  py-16 px-6 min-h-screen">
       <div className="max-w-6xl mx-auto px-6">
-        <motion.h1
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mt-15 text-4xl font-bold text-center bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-transparent bg-clip-text mb-12"
-        >
-          Bienvenue sur <span className="decoration-wavy decoration-blue-400">ma page de blog</span>
-        </motion.h1>
+       
+        <TitrePage titre="Mes blog" size="xl" />
 
         <div className="mb-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex flex-wrap gap-2">
@@ -179,7 +174,8 @@ const Blog = () => {
                     />
                   ) : article.image ? (
                     <img
-                      src={`http://127.0.0.1:8000${article.image}`}
+                      // src={`http://127.0.0.1:8000${article.image}`}
+                      src={article.image} // vue que j'ai stocké l'image dans le storage cloudinary
                       alt={article.titre}
                       className="w-full sm:w-24 h-24 object-cover rounded-md flex-shrink-0"
                     />
@@ -223,13 +219,15 @@ const Blog = () => {
                 >
                   {article.video ? (
                     <video
-                      src={`http://127.0.0.1:8000${article.video}`}
+                      // src={`http://127.0.0.1:8000${article.video}`}
+                      src={article.video}
                       controls
                       className="w-full h-48 object-cover"
                     />
                   ) : article.image ? (
                     <img
-                      src={`http://127.0.0.1:8000${article.image}`}
+                      // src={`http://127.0.0.1:8000${article.image}`}
+                      src={article.image}
                       alt={article.titre}
                       className="w-full h-48 object-cover"
                     />
