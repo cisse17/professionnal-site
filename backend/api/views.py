@@ -215,6 +215,25 @@ def like_blog(request, pk):
     return response
 
 
+# @api_view(["GET"])
+# def blog_detail_by_slug(request, slug):
+#     blog = get_object_or_404(Blog, slug=slug)
+#     serializer = BlogSerializer(blog)
+#     return Response(serializer.data)
+
+
+@api_view(["GET"])
+def blog_detail_by_slug(request, slug):
+    try:
+        blog = get_object_or_404(Blog, slug=slug)
+        serializer = BlogSerializers(blog, context={"request": request})
+        return Response(serializer.data)
+    except Exception as e:
+        print(f"Erreur lors de la récupération du blog avec le slug '{slug}': {e}")
+        return Response({"error": str(e)}, status=500)
+
+
+
 # On va rendre le prompt dynamique en allant chercher mes projets (et autres infos) directement dans la base Django, puis les injecter dans le message system avant chaque appel OpenAI.
 # Ainsi, quand j'ajoute ou modifie un projet dans l’admin, le bot connaît immédiatement la mise à jour.
 
@@ -308,11 +327,3 @@ N'hésite pas à orienter les réponses vers ses réalisations réelles.
 
 
 
-"""Voici ses projets :
-
-1. **Portfolio personnel** : site vitrine présentant ses compétences, projets, blog et contact.
-2. **Apllication web PhotoShare** : plateforme de publication de photo de souvenir avec interface admin complète.
-3. **Site Ecommerce** : site ecommerce pour la vente d'habits.
-4. **Chat PDF** : Recherche augmentée par intelligence artificielle
-(RAG) avec OpenAI API intégré.Vous pouvez discuter avec votre propre document PDF.
-"""

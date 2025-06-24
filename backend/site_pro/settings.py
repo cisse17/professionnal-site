@@ -23,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-r=y5stmy_ls!ip)7r@!znkkkp71j-tw4!qz)@brjn=a(-pehcd'
+SECRET_KEY = os.getenv("SECRET_KEY", "change-me")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "bmc.onrender.com").split(",")
 
 
 # Application definition
@@ -40,9 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'api',
     "corsheaders",
     'rest_framework',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -103,6 +106,7 @@ DATABASES = {
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'https://bmc.onrender.com'
 ]
 
 # pour gerer la pagination 
@@ -139,7 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'fr-fr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Paris'
 
 USE_I18N = True
 
@@ -155,7 +159,19 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [BASE_DIR / "frontend_build"]  # le build Vite
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Ajoute à la fin de settings.py pour charger le React index.html si besoin :
+TEMPLATES[0]["DIRS"] = [BASE_DIR / "frontend_build"]
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

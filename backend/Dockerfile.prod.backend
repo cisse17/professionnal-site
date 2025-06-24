@@ -1,17 +1,73 @@
-FROM python:3.11
+# Étape 1 : Build frontend
+FROM node:18 AS frontend
+WORKDIR /frontend
+COPY ../frontend ./
+RUN npm install && npm run build
+
+# Étape 2 : Backend Django
+FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 
-COPY requirements.txt .
+RUN apt-get update && apt-get install -y gcc libpq-dev && rm -rf /var/lib/apt/lists/*
+
+COPY ./requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Collecte des fichiers statiques pour servir en prod
+# Ajout des fichiers React dans Django
+COPY --from=frontend /frontend/dist /app/frontend_build/
+
+# Collecte des fichiers statiques (si utilisés)
+RUN mkdir -p /app/staticfiles
 RUN python manage.py collectstatic --noinput
 
-# Lancement avec Gunicorn (serveur WSGI pour Django)
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000"]
+EXPOSE 8000
+
+CMD ["gunicorn", "site_pro.wsgi:application", "--bind", "0.0.0.0:8000"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# FROM python:3.11-slim
+
+# WORKDIR /app
+
+# RUN apt-get update && apt-get install -y \
+#     libpq-dev gcc \
+#     && rm -rf /var/lib/apt/lists/*
+
+# COPY requirements.txt .
+# RUN pip install --no-cache-dir -r requirements.txt
+
+# COPY . .
+
+# EXPOSE 8000
+
+# # Production: lance Gunicorn avec ton projet Django
+# CMD ["gunicorn", "site_pro.wsgi:application", "--bind", "0.0.0.0:8000"]
+
+
+

@@ -23,3 +23,5 @@ EXPOSE 8000
 
 # Commande pour lancer Django en mode dev (à adapter pour prod)
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+
