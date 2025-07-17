@@ -311,7 +311,7 @@ N'hésite pas à orienter les réponses vers ses réalisations réelles.
             messages=messages,
             temperature=0.7
         )
-
+      
         assistant_reply = response.choices[0].message
 
         return JsonResponse({
@@ -322,6 +322,9 @@ N'hésite pas à orienter les réponses vers ses réalisations réelles.
         })
 
     except Exception as e:
+        import traceback
+        print("Erreur lors de l'appel à l'API OpenAI :")
+        traceback.print_exc()
         print("Erreur OpenAI :", e)
         return JsonResponse({'error': str(e)}, status=500)
 

@@ -15,7 +15,7 @@ CATEGORIES = [
 ]
 
 class Blog(models.Model):
-    titre = models.CharField(max_length=200)
+    titre = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
     content = models.TextField()
     # image = models.ImageField(upload_to='blog_images/', null=True, blank=True)

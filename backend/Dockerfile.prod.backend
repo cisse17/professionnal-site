@@ -19,8 +19,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+COPY ../frontend/dist /app/frontend_build
+
 # Ajout des fichiers React dans Django
-COPY --from=frontend /frontend/dist /app/frontend_build/
+# COPY --from=frontend /frontend/dist /app/frontend_build/
 
 # Collecte des fichiers statiques (si utilisés)
 RUN mkdir -p /app/staticfiles

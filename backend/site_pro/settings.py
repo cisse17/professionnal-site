@@ -116,8 +116,7 @@ REST_FRAMEWORK = {
 }
 
 
-
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -161,7 +160,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [BASE_DIR / "frontend_build"]  # le build Vite
+
+# STATICFILES_DIRS = [BASE_DIR / "frontend_build"]  # le build Vite
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend_build')]
+# if not DEBUG:
+#     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend_build')]
+
+
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Ajoute à la fin de settings.py pour charger le React index.html si besoin :
