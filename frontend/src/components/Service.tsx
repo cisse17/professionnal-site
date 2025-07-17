@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import {CheckCircle } from "lucide-react";
+import TitrePage from "./TitrePage"
+
 
 const services = [
   {
@@ -8,23 +10,36 @@ const services = [
     title: "Développement Web",
     description: "Création de sites modernes, performants et responsives avec Python/django, React, Tailwind, etc.",
   },
-  {
-    icon: "🎨",
-    title: "UI/UX Design",
-    description: "Conception d'interfaces centrées utilisateur, ergonomiques et attrayantes.",
-  },
-  // {
-  //   icon: <BrainCircuit size={32} className="text-rose-600 " />,
-  //   title: "Modèles de Langage (LLM)",
-  //   description: "Intégration d'IA conversationnelle, génération de texte, agents IA.",
 
-  // },
   {
     // icon: "🧠",
     icon: "🤖",
     title: "Modèle de Langage (LLM)",
     description: "Intégration d'intelligence artificielle pour la génération de contenu, agents conversationnels, RAG, etc.",
   },
+  {
+    icon: "🎨",
+    title: "UI/UX Design",
+    description: "Conception d'interfaces centrées utilisateur, ergonomiques et attrayantes.",
+  },
+
+  // {
+  //   icon: "📦",
+  //   title: "DevOps",
+  //   description: "Automatisation des déploiements, gestion des infrastructures et optimisation des pipelines CI/CD.",
+  // },
+  
+  // {
+  //   icon: "📊",
+  //   title: "Data Science",
+  //   description: "Analyse de données, visualisation et création de modèles prédictifs avec Python.",
+  // },
+  // {
+  //   icon: "☁️",
+  //   title: "Cloud Computing",
+  //   description: "Intégration et déploiement d'applications sur AWS, gestion des services cloud.",
+  // },
+ 
 ];
 
 const pointsFort = [
@@ -38,16 +53,11 @@ const pointsFort = [
 
 export default function ServicePage() {
   return (
-    <section className="bg-gradient-to-br from-white via-blue-50 to-blue-100  min-h-screen py-20 px-6">
-      <div className="max-w-5xl mx-auto">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl font-bold text-center mt-10 mb-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text"
-        >
-          Mes Services
-        </motion.h1>
+    <section className="bg-gradient-to-br from-white via-blue-50 to-blue-100  min-h-screen py-20 ">
+      <div className="max-w-6xl mx-auto  px-6">
+     
+      <TitrePage titre="Mes services  " size="xl"/>
+    
 
         <p className="text-center text-gray-600 mb-16">
           Voici ce que je peux faire pour vous 👇
@@ -62,7 +72,7 @@ export default function ServicePage() {
               className="bg-white p-6 rounded-2xl shadow hover:shadow-md border border-gray-200 text-center"
             >
               <div className="text-4xl mb-4">{service.icon}</div>
-              <h3 className="text-lg font-semibold text-indigo-700 mb-2">{service.title}</h3>
+              <h3 className="text-lg font-bold text-[#1727D7] mb-2">{service.title}</h3>
               <p className="text-gray-600 text-sm">{service.description}</p>
             </motion.div>
           ))}
@@ -82,7 +92,7 @@ export default function ServicePage() {
           </ul>
         </div>
 
-        <div className="text-center mt-16">
+        {/* <div className="text-center mt-16">
           <h3 className="text-lg font-semibold text-gray-700 mb-4">
             Vous avez un projet ?
           </h3>
@@ -92,7 +102,9 @@ export default function ServicePage() {
           >
             Discutons-en →
           </Link>
-        </div>
+        </div> */}
+
+
       </div>
     </section>
   );

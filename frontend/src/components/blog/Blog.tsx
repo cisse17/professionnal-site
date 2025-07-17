@@ -111,7 +111,7 @@ const Blog = () => {
     <section className="bg-gradient-to-br from-white via-blue-50 to-blue-100  py-16 px-6 min-h-screen">
       <div className="max-w-6xl mx-auto px-6">
        
-        <TitrePage titre="Mes blog" size="xl" />
+        <TitrePage titre="Espace dédié à l'innovation technologique, mes expérimentations, succès et échecs." size="md" />
 
         <div className="mb-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex flex-wrap gap-2">
@@ -181,7 +181,7 @@ const Blog = () => {
                     />
                   ) : null}
                   <div className="flex-1">
-                    <h3 className="text-md font-semibold text-[#1727D7] truncate">{article.titre}</h3>
+                    <h3 className="text-md font-semibold text-[#1727D7] truncate text-wrap">{article.titre}</h3>
                     <p className="text-sm text-gray-600 mt-1">{article.auteur}</p>
                     <p className="text-xs text-gray-400 italic">
                       Mis à jour{" "}

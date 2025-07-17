@@ -10,7 +10,7 @@ export default function Chatbot() {
     {
       role: "assistant",
       content:
-        "Bonjour 👋 Je suis le bot assistant de Bassirou Mbacké CISSE ! Posez-moi une question sur son portfolio.",
+        "Bonjour 👋 Je suis le bot assistant IA de Bassirou Mbacké CISSE ! Posez-moi une question sur son portfolio.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -26,6 +26,7 @@ export default function Chatbot() {
     try {
       const res = await axios.post("http://localhost:8000/api/chat/", {
         messages: newMessages,
+        
       });
       setMessages([...newMessages, res.data.reply]);
     } catch (err) {
@@ -45,7 +46,7 @@ export default function Chatbot() {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
+          className="bg-[#1727D7] text-white p-3 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
           aria-label="Ouvrir le chat"
         >
           <MessageCircle className="w-6 h-6" />
@@ -58,17 +59,18 @@ export default function Chatbot() {
           data-aos="fade-up"
           className="w-80 max-h-[80vh] bg-white border border-gray-200 shadow-xl rounded-xl flex flex-col overflow-hidden animate-fade-in-up"
         >
-          <div className="bg-indigo-600 text-white p-3 flex justify-between items-center rounded-t-xl">
+          <div className="bg-[#1727D7] text-white p-3 flex justify-between items-center rounded-t-xl">
             <span className="font-medium text-sm">
               {" "}
               🤖 Assistant Portfolio{" "}
             </span>
             <button
               onClick={() => setOpen(false)}
-              className="text-white text-lg font-bold hover:text-indigo-300 transition-colors"
+              className="text-white w-3 text-lg font-bold hover:text-blue transition-colors" 
               aria-label="Fermer le chat"
             >
-              ✖
+              X   
+              {/* ✖  */}
             </button>
           </div>
 
@@ -107,7 +109,7 @@ export default function Chatbot() {
             />
             <button
               onClick={sendMessage}
-              className="bg-indigo-600 text-white px-3 text-sm rounded hover:bg-indigo-700 transition-colors"
+              className="bg-[#1727D7] text-white px-3 text-sm rounded hover:bg-indigo-700 transition-colors"
             >
               Envoyer
             </button>

@@ -29,7 +29,7 @@ const BlogDetail = () => {
       .then((res) => setArticle(res.data))
       .catch((err) => {
         console.error("Erreur lors du chargement de l'article :", err);
-        console.log("Détail de l'erreur :", err.response?.data); // test
+        // console.log("Détail de l'erreur :", err.response?.data); // test
         setError("Article introuvable ou une erreur est survenue.");
       });
   }, [slug]);
@@ -89,7 +89,13 @@ const BlogDetail = () => {
           </video>
         )}
 
-        <div className="prose max-w-none text-gray-800 leading-relaxed">{article.content}</div>
+        <div className="prose max-w-none text-gray-800 leading-relaxed"
+             dangerouslySetInnerHTML={{ __html: article.content }} >
+          {/* {article.content} */} 
+          {/* dangerouslySetInnerHTML pour remplacer |safe dans django pour permettre d'accepter les balises html dans django admin
+          par exemple pour mettre un texte en gras, saut de ligne etc... */}
+     
+        </div>
       </div>
     </section>
   );

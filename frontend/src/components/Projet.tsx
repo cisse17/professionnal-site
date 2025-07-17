@@ -66,11 +66,7 @@ const Projet = () => {
     <div className="max-w-6xl mx-auto px-6">
 
 
-    <TitrePage titre="Mes servicesssS " size="xl"/>
-      {/* Titre principal */}
-      <h1 className="text-4xl  font-bold text-center mb-10 text-blue-900">
-        Mes <span className="text-blue-600">Projets</span>
-      </h1>
+    <TitrePage titre="Mes Projets" size="xl"/>
         
       {/* Filtres */}
       <div className="flex flex-col md:flex-row gap-4 mb-10 justify-center" data-aos="fade-down">
@@ -112,7 +108,7 @@ const Projet = () => {
             />
 
             <div className="p-5">
-              <h2 className="text-xl font-bold text-blue-800 mb-2">
+              <h2 className="text-xl font-bold text-[#1727D7] mb-2">
                 {projet.titre}
               </h2>
               <p className="text-gray-600 text-sm">{projet.description}</p>
@@ -135,7 +131,7 @@ const Projet = () => {
                   href={projet.demolien}
                   target="_blank"
                   rel="noreferrer"
-                  className="btn btn-sm bg-blue-600 hover:bg-blue-700 text-white w-2/3 "
+                  className="btn btn-sm bg-[#1727D7] hover:bg-blue-700 text-white w-2/3 "
                 >
                   Voir projet
                 </a>

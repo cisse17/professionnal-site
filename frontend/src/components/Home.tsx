@@ -1,5 +1,5 @@
 
-import bassirou from "../assets/bassirou.jpg"
+import bassirou from "../assets/bassirou_img_portfolio.jpg"
 import { Mail, LucideGithub, Linkedin, LetterText, CalendarSync, Paintbrush, Container } from 'lucide-react';
 import {Link} from "react-router-dom"
 import Titre from './Titre';
@@ -8,23 +8,34 @@ import imgCSS from "../assets/techno/css.png";
 import imgJS from "../assets/techno/js.png";
 import imgREACT from "../assets/techno/react.png";
 import imgHTML from "../assets/techno/html.png";
-import imgNEXT from "../assets/techno/next-js.webp";
-import imgNODE from "../assets/techno/node-js.png";
+// import imgNEXT from "../assets/techno/next-js.webp";
+// import imgNODE from "../assets/techno/node-js.png";
 import imgTYPE from "../assets/techno/typescript.svg";
 import imgTAILWIND from "../assets/techno/tailwind.png";
-import imgPRISMA from "../assets/techno/prisma.webp";
+// import imgPRISMA from "../assets/techno/prisma.webp";
+import imgStreamlit from "../assets/techno/streamlit-48.png";
+import imgPython from "../assets/techno/python.jpg";
+import imgDocker from "../assets/techno/docker.png";
+import imgDjango from "../assets/techno/django-48.png";
+import imgAws from "../assets/techno/aws-64.png";
+import imgLangChain from "../assets/techno/langchain-color.png";
 
 
 const skills = [
-  { id: 1, name: "HTML", image: imgHTML },
-  { id: 2, name: "CSS", image: imgCSS },
-  { id: 3, name: "JavaScript", image: imgJS },
-  { id: 4, name: "React", image: imgREACT },
-  { id: 5, name: "Node.js", image: imgNODE },
-  { id: 6, name: "Tailwind CSS", image: imgTAILWIND },
-  { id: 7, name: "TypeScript", image: imgTYPE },
-  { id: 8, name: "Next.js", image: imgNEXT },
-  { id: 9, name: "Prisma", image: imgPRISMA },
+  { id: 1, name: "Python", image: imgPython },
+  { id: 2, name: "Django", image: imgDjango },
+  { id: 3, name: "HTML", image: imgHTML },
+  { id: 4, name: "CSS", image: imgCSS },
+  { id: 5, name: "JavaScript", image: imgJS },
+  { id: 6, name: "React", image: imgREACT },
+  { id: 7, name: "Tailwind CSS", image: imgTAILWIND },
+  { id: 8, name: "Streamlit", image: imgStreamlit },
+  { id: 9, name: "Docker", image: imgDocker },  
+  { id: 10, name: "TypeScript", image: imgTYPE },
+  { id: 11, name: "Aws", image: imgAws },  
+  { id: 12, name: "LangChain", image: imgLangChain },  
+
+
 ];
 
 
@@ -46,7 +57,7 @@ const aboutSections = [
   {
     id: 3,
     title: "Développeur DevOps",
-    description: "Créer des interfaces utilisateur attrayantes et fonctionnelles est ma priorité.",
+    description: "Créer ou Libérer le potentiel de votre pipeline DevOps : automatisez, sécurisez et déployez à la vitesse de l'innovation.",
     icon: <Container style={{ color : "1727D7"}} className="scale-150" />,
 },
   {
@@ -83,20 +94,14 @@ function Home() {
     </div>
 
     <div className="flex justify-center md:justify-start space-x-4 text-[#1727D7] text-2xl mt-4">
-      <Link to=""><Mail /></Link>
-      <Link to=""><LucideGithub /></Link>
-      <Link to=""><Linkedin /></Link>
+      <Link to="mailto:bassiroucisse1711@gmail.com"><Mail /></Link>
+      <Link to="https://github.com/cisse17"><LucideGithub /></Link>
+      <Link to="https://www.linkedin.com/in/bassirou-mback%C3%A9-ciss%C3%A9-683529263/"><Linkedin /></Link>
     </div>
 
-    <Link
-      to="mailto:bassiroucisse1711@gmail.com"
-      className="inline-block mt-6 px-6 py-3 bg-[#1727D7] text-white rounded-xl shadow hover:bg-blue-800 transition duration-300"
-    >
-      {/* Me contacter */}
-      Email
-    </Link>
+   
     <span  
-      className="inline-block mt-6 ml-4 px-6 py-3 bg-[#1727D7] text-white rounded-xl shadow hover:bg-blue-800 transition duration-300"
+      className="inline-block mt-6  px-6 py-3 bg-[#1727D7] text-white rounded-xl shadow transition duration-300"
     >
       {/* Me contacter */}
       Tél : 0758252282
@@ -106,11 +111,11 @@ function Home() {
   {/* Photo de profil */}
   <section className=" max-w-6xl mx-auto  px-6 md:w-1/3 flex justify-center" data-aos="fade-left">
     <img
-      src={bassirou}
-      alt="Bassirou"
-      className="w-64 h-64 md:w-80 md:h-80 object-cover border-4 shadow-xl md:mt-0 mt-10"
+       src={bassirou}
+      alt="Bassirou-img"
+      className="w-64 h-80  md:w-80 md:h-96 object-cover border-4 shadow-xl md:mt-0 mt-10"
       style={{
-        borderRadius: "47% 53% 39% 61% / 38% 34% 66% 62%",
+        borderRadius: "50% 53% 39% 61% / 38% 34% 66% 62%",
         borderColor: "#1727D7",
       }}
     />

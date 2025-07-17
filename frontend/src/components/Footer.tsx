@@ -1,4 +1,4 @@
-import { Facebook, Twitter, Youtube } from "lucide-react";
+import {  Linkedin, LucideGithub, Mail } from "lucide-react";
 import mon_logo from "../assets/mon_logo.svg";
 
 const Footer = () => {
@@ -18,29 +18,33 @@ const Footer = () => {
         <nav>
           <div className="grid grid-flow-col gap-6 justify-center md:justify-start">
             <a
-              href="https://twitter.com"
+              href="mailto:bassiroucisse1711@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
             >
-              <Twitter className="w-6 h-6  text-blue-700 " />
+              <Mail className="w-6 h-6  text-blue-700 " />
             </a>
             <a
-              href="https://youtube.com"
+              href="https://github.com/cisse17"
               target="_blank"
               rel="noopener noreferrer"
               className=" transition-colors"
             >
-              <Youtube className="w-6 h-6  text-blue-700 " />
+              < LucideGithub className="w-6 h-6  text-blue-700 " />
             </a>
+
             <a
-              href="https://facebook.com"
+              href="https://www.linkedin.com/in/bassirou-mback%C3%A9-ciss%C3%A9-683529263/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-blue-700 transition-colors"
             >
-              <Facebook className="w-6 h-6 dark:text-gray-300 text-blue-700" />
+              <Linkedin className="w-6 h-6 dark:text-gray-300 text-blue-700" />
             </a>
+
+            
+
           </div>
         </nav>
       </div>
