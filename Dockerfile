@@ -38,5 +38,7 @@ COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 # Expose port 80 pour le web
 EXPOSE 80
 
-# Lancer Nginx au démarrage
-CMD ["nginx", "-g", "daemon off;"]
+
+# Lancer Nginx au démarrage et guni
+CMD sh -c "gunicorn backend.site_pro.wsgi:application --bind 0.0.0.0:8000 & nginx -g 'daemon off;'"
+
