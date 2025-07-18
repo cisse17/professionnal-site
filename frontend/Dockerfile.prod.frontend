@@ -1,24 +1,18 @@
-# Étape 1 : build
-FROM node:18 AS builder
+ # Étape de build
+ FROM node:18 AS build
+ WORKDIR /app
+ COPY . .
+ RUN npm install && npm install -D autoprefixer
+ RUN npm run build
 
-WORKDIR /app
+  # Étape de production
+ FROM node:18
+ WORKDIR /app
+ COPY --from=build /app/dist ./dist
+ COPY --from=build /app/package*.json ./
+ COPY --from=build /app/server.js ./
+RUN npm install --only=production
 
-COPY package*.json ./
-RUN npm install
+EXPOSE 3000
+CMD ["node", "server.js"]
 
-COPY . .
-
-RUN npm run build
-
-# Étape 2 : serveur statique
-FROM nginx:alpine
-
-# Copie le build dans Nginx
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Copie une config nginx personnalisée (optionnel)
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]

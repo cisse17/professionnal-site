@@ -1,17 +1,17 @@
- # Étape de build
-# FROM node:18 AS build
-# WORKDIR /app
-# COPY . .
-# RUN npm install && npm install -D autoprefixer
-# RUN npm run build
+#  # Étape de build
+#  FROM node:18 AS build
+#  WORKDIR /app
+#  COPY . .
+#  RUN npm install && npm install -D autoprefixer
+#  RUN npm run build
 
-#  # Étape de production
-# FROM node:18
-# WORKDIR /app
-# COPY --from=build /app/dist ./dist
-# COPY --from=build /app/package*.json ./
-# COPY --from=build /app/server.js ./
-#  RUN npm install --only=production
+#   # Étape de production
+#  FROM node:18
+#  WORKDIR /app
+#  COPY --from=build /app/dist ./dist
+#  COPY --from=build /app/package*.json ./
+#  COPY --from=build /app/server.js ./
+# RUN npm install --only=production
 
 # EXPOSE 3000
 # CMD ["node", "server.js"]
@@ -21,23 +21,24 @@
 
 
 
+# quand je suis en dev, 
 
-# # Utilise une image Node officielle
- FROM node:18
+# # # Utilise une image Node officielle
+FROM node:18
 
-# # Crée le dossier de travail dans le conteneur
- WORKDIR /app
+ # # Crée le dossier de travail dans le conteneur
+WORKDIR /app
 
-# # Copie les fichiers de dépendances et installe
- COPY package*.json ./
- RUN npm install
+ # # Copie les fichiers de dépendances et installe
+COPY package*.json ./
+RUN npm install
 
-# # Copie tout le code dans le conteneur
- COPY . .
+ # # Copie tout le code dans le conteneur
+COPY . .
 
-# # Expose le port que Vite utilise
- EXPOSE 3000
+ # # Expose le port que Vite utilise
+EXPOSE 3000
 
-# # Démarre Vite en mode développement
- CMD ["npm", "run", "dev"]
+ # # Démarre Vite en mode développement
+CMD ["npm", "run", "dev"]
 

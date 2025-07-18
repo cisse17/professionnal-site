@@ -5,7 +5,7 @@ services:
       context: ./backend
     container_name: backend
     volumes:
-      - ./backend:/app
+      - ./backend:/app # signifie que tout changement dans VS Code est immédiatement visible dans le conteneur Docker
     ports:
       - "8000:8000"
     env_file:
@@ -17,12 +17,19 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile.frontend
+      dockerfile: Dockerfile.dev.frontend
     container_name: frontend
+    volumes:
+      - ./frontend:/app # signifie que tout changement dans VS Code est immédiatement visible dans le conteneur Docker
+      - /app/node_modules  # évite les conflits de node_modules entre host et container
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
+      # - NODE_ENV=production
+      - NODE_ENV=development
+      - VITE_PORT=3000 # je veux que mon Vite en développement écoute sur localhost:3000 (pour rester cohérent avec la prod)
+                        # voila pourquoi j'ai ajouté VITE_PORT=3000 dans l’environnement mais on pouvait modifier directement mon package.json dans scripts : "dev": "vite --port 3000"
+    command: npm run dev
 
   db:
     image: postgres:16
