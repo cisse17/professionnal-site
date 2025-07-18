@@ -31,7 +31,4 @@ services:
         value: ${CLOUDINARY_API_SECRET}
       - key: OPENAI_API_KEY
         value: ${OPENAI_API_KEY}
-    # Commande personnalisée pour lancer backend et nginx
-    # Ici on lance Gunicorn en arrière-plan, puis nginx en avant-plan
-    startCommand: >
-      sh -c "gunicorn backend.site_pro.wsgi:application --bind 0.0.0.0:8000 & nginx -g 'daemon off;'"
+ 
