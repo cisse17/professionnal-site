@@ -31,4 +31,3 @@ services:
         value: ${CLOUDINARY_API_SECRET}
       - key: OPENAI_API_KEY
         value: ${OPENAI_API_KEY}
- 
