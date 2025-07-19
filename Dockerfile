@@ -1,7 +1,7 @@
 # Étape 1 : Build frontend avec Vite/React
 FROM node:18 AS frontend
 WORKDIR /frontend
-COPY ./frontend/src ./src
+COPY ./frontend/ ./
 RUN npm install && npm run build
 
 # Étape 2 : Build backend Django + Gunicorn
