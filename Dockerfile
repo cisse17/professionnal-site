@@ -30,20 +30,22 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update && \
-    apt-get install -y gcc libpq-dev nginx supervisor && \
+    apt-get install -y gcc libpq-dev nginx supervisor python3-pip && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copie backend + frontend + static
-COPY --from=backend /app/backend /app/backend
-COPY --from=backend /frontend /frontend
-COPY --from=backend /app/backend/staticfiles /static
+# Copier backend + frontend + static
+COPY ./backend/ ./backend/
+COPY --from=frontend /frontend /frontend
+COPY ./backend/staticfiles /static
 
-# Copie nginx config
+# Copier requirements.txt et installer dépendances Python (dont gunicorn)
+COPY backend/requirements.txt ./requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copier configs nginx et supervisord
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-
-# Copie supervisor config
 COPY ./supervisord.conf /etc/supervisord.conf
 
 # Expose port 80
