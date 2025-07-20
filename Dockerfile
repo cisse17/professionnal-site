@@ -49,8 +49,10 @@ COPY ./supervisord.conf /etc/supervisord.conf
 # Expose port 80
 EXPOSE 80
 
-# Lancer supervisor (qui gère nginx + gunicorn)
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+
+# # Lancer supervisor (qui gère nginx + gunicorn)
+# CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 
 
 
