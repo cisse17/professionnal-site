@@ -38,7 +38,7 @@ WORKDIR /app
 # Copier backend + frontend + static
 COPY ./backend/ ./backend/
 COPY --from=frontend /frontend /frontend
-COPY ./backend/staticfiles /static
+COPY --from=backend /app/backend/staticfiles /static
 
 # Copier requirements.txt et installer dépendances Python (dont gunicorn)
 COPY backend/requirements.txt ./requirements.txt
