@@ -6,7 +6,7 @@ RUN npm install && npm run build
 
 
 ### Étape 2 : Préparer backend Django ###
-FROM python:3.11-slim AS build-backend
+FROM python:3.11-slim AS backend
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
