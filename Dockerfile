@@ -26,35 +26,32 @@ COPY --from=build-frontend /frontend/dist ../frontend
 RUN python manage.py collectstatic --noinput
 
 
-### Étape 3 : Image finale avec Gunicorn + Nginx + Supervisor ###
+# Étape 3 : Final - Un seul conteneur avec Nginx + Gunicorn + Supervisor
 FROM python:3.11-slim AS final
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
+# Install system deps + Python deps
 RUN apt-get update && \
-    apt-get install -y gcc libpq-dev nginx supervisor python3-pip && \
+    apt-get install -y gcc libpq-dev nginx supervisor && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copier backend et frontend
-COPY ./backend ./backend
-COPY --from=build-frontend /frontend /frontend
-COPY --from=build-backend /backend/staticfiles /static
+# Copie code backend et frontend
+COPY --from=backend /app/backend /app/backend
+COPY --from=backend /frontend /frontend
+COPY --from=backend /app/backend/staticfiles /static
 
-# Installer les dépendances Python
-COPY backend/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# 🔽 Ajoute cette ligne : copie les libs Python installées dans backend
+COPY --from=backend /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=backend /usr/local/bin /usr/local/bin 
+ # pour copier les exécutables (comme gunicorn)
 
-# Copier les configs
+# Copie configs
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY ./supervisord.conf /etc/supervisord.conf
 
 EXPOSE 80
-
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
-
 
 
 
